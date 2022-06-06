@@ -14,7 +14,6 @@ import numpy as np
 ###ROS Things
 import rospy
 from sensor_msgs.msg import CompressedImage
-from applanix_publisher.msg import NavigationSolution
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
 from lane_detection_msgs.msg import LaneDetectionMsg
@@ -36,7 +35,7 @@ from ApplanixToLidar import matrix2lidar
     
 def draw_one_line_strip(x_wc_to_draw, y_wc_to_draw, rgba=(1.0,0,0,1), lane_id=0, is_line_strip = True, color_weight=[]):
     lane_line_strip = Marker()
-    lane_line_strip.header.frame_id = 'camera_wc'
+    lane_line_strip.header.frame_id = 'rslidar_front'
     lane_line_strip.action = Marker.ADD
     lane_line_strip.pose.orientation.w = 1
     lane_line_strip.id = lane_id
@@ -56,6 +55,7 @@ def draw_one_line_strip(x_wc_to_draw, y_wc_to_draw, rgba=(1.0,0,0,1), lane_id=0,
         i_wcy = y_wc_to_draw[i]
         i_point.y = i_wcy
         i_point.x = i_wcx
+        i_point.z = -1
         lane_line_strip.points.append(i_point)
     
         if len(color_weight):
@@ -94,8 +94,6 @@ def draw_visualization_and_pub(updater):
     #     lane_marker_pub.publish(rightcurb_msg)
     
     fake_lane_detection_pub.publish(ret_lane_detection_msg)
-    br = tf.TransformBroadcaster()
-    br.sendTransform((0,0,-1), (0,0,0,1), rospy.Time.now(), 'camera_wc', 'rslidar_front')
 
 
 def draw_visualization_and_pub_s(updater):      
@@ -128,8 +126,6 @@ def draw_visualization_and_pub_s(updater):
     #     lane_marker_pub.publish(rightcurb_msg)
     
     fake_lane_detection_pub.publish(ret_lane_detection_msg)
-    br = tf.TransformBroadcaster()
-    br.sendTransform((0,0,-1), (0,0,0,1), rospy.Time.now(), 'camera_wc', 'rslidar_front')
     
 def img_callback(img_msg):
     global UTM_T_L    
