@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--Publish sensors to local UTM Dynamic Transforms-->
+    <node name="sensors2localUTMpublisher" pkg="transform_publisher" type="transform_sensors2local_UTM.py" output="screen"> </node>
+    
+    <!--Publish left_cam to RS32 Static Transform - Sep2021-->
+    <node pkg="tf" type="static_transform_publisher" name="left_cam_tf_broadcaster" args="-0.22 0.75 1.06 -0.959931088597 -0.0558505360638 -1.74358392274 rslidar_front left_cam 50" />
+
+    <!--Publish center_cam to RS32 Static Transform - Nov2021-->
+    <node pkg="tf" type="static_transform_publisher" name="center_cam_tf_broadcaster" args="-0.65 0.2 1.25 -1.60046692408 0.0 -1.6179202166 rslidar_front center_cam 50" />
+
+    <!--Publish right_cam to RS32 Static Transform - Sep2021-->
+    <node pkg="tf" type="static_transform_publisher" name="right_cam_tf_broadcaster" args="-0.2 -0.75 1.0 -2.23053078405 -0.0523598775598 -1.63362817987 rslidar_front right_cam 50" />
+
+    <!--Publish applanix to RS32 Static Transform - Sep2021-->
+<!--      <node pkg="tf" type="static_transform_publisher" name="applanix_tf_broadcaster" args="-3.2 0 1.44 1.5707963267948966 0.0 3.141592653589793 rslidar_front applanix 50" />
+ -->
+    <!--Publish RS_BP_F to RS32 Static Transform - Nov2021-->
+<!--     <node pkg="tf" type="static_transform_publisher" name="rslidar_BP_F_tf_broadcaster" args="-0.1 -0.8 1.25 -0.9424777960769379 -0.06283185307179587 -3.141592653589793 rslidar_front rslidar_BP_F 50" /> -->
+
+</launch>
+
