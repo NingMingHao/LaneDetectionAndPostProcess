@@ -17,7 +17,6 @@ from sensor_msgs.msg import CompressedImage
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
 from lane_detection_msgs.msg import LaneDetectionMsg
-import tf
 from std_msgs.msg import ColorRGBA
 import os
 from std_msgs.msg import Float32MultiArray, Float32
