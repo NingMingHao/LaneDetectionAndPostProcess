@@ -9,7 +9,7 @@ Panels:
         - /Marker2/Status1
         - /Marker3/Status1
       Splitter Ratio: 0.5
-    Tree Height: 441
+    Tree Height: 140
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -439,6 +439,14 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /lane_marker_fake
+      Name: Marker
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -479,8 +487,8 @@ Visualization Manager:
       Scale: 34.50990676879883
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 6.60133171081543
-      Y: 0.3146972358226776
+      X: 11.405552864074707
+      Y: -1.7395421266555786
     Saved: ~
 Window Geometry:
   Displays:

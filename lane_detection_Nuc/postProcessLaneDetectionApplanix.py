@@ -67,7 +67,7 @@ def draw_one_line_strip(x_wc_to_draw, y_wc_to_draw, rgba=(1.0,0,0,1), lane_id=0,
     
 def rot2bus(x, y, rot_heading_deg=-3, half_length=2):
     if np.all(x==0) or (rot_heading_deg==0 and half_length==0):
-        return x, y
+        return x, y, [0,0,0]
     else:
         rot_heading = np.deg2rad(rot_heading_deg)
         cos_head = np.cos(rot_heading)
@@ -77,18 +77,16 @@ def rot2bus(x, y, rot_heading_deg=-3, half_length=2):
         rot_xy = xy @ rot_matrix
         rot_x = rot_xy[:,0]+half_length
         rot_y = rot_xy[:,1]
-        poly_f = np.poly1d(np.polyfit(rot_x, rot_y, 2))
+        new_fit = np.polyfit(rot_x, rot_y, 2)
+        poly_f = np.poly1d(new_fit)
         new_x = np.linspace(0, 20 , 21)
         new_y = poly_f(new_x)
-        return new_x, new_y
+        return new_x, new_y, new_fit
     
     
 def draw_visualization_and_pub(vis, out_j, updater):    
-    # rot_heading_deg = 2
-    # half_length = 2
-    
-    rot_heading_deg = 0
-    half_length = 0
+    rot_heading_deg = 1.5
+    half_length = 3.2
     
     for i in range(out_j.shape[1]):
         if np.sum(out_j[:, i] != 0) > 2:
@@ -123,7 +121,6 @@ def draw_visualization_and_pub(vis, out_j, updater):
             
             
     x_wc_to_draw = np.linspace(0, 20 , 21)
-    # y_wc_to_draw = np.linspace(0, 20, 21)
     
     ret_lane_detection_msg = LaneDetectionMsgFull()
     is_good_detection = updater.has_initialized & (updater.continuous_no_detect_distance < updater.max_no_detection_distance)
@@ -132,35 +129,32 @@ def draw_visualization_and_pub(vis, out_j, updater):
         x_wc_to_draw_ = x_wc_to_draw.copy()
         left_f_wc = np.poly1d(updater.left_fit_wc)
         y_wc_to_draw_ = -left_f_wc(x_wc_to_draw_-updater.z_for_keep_distance)
-        ret_lane_detection_msg.PolyFitC2 = -updater.left_fit_wc[0]
-        ret_lane_detection_msg.PolyFitC1 = -updater.left_fit_wc[1]
-        ret_lane_detection_msg.PolyFitC0 = -updater.left_fit_wc[2]
-        ret_lane_detection_msg.LateralDis = -updater.left_fit_wc[2]
         ret_lane_detection_msg.Confidence = updater.selected_left_percent
     else:
         y_wc_to_draw_ = np.zeros_like(x_wc_to_draw)
         x_wc_to_draw_ = np.zeros_like(x_wc_to_draw)
-    rot_x_centerlane, rot_y_centerlane = rot2bus(x_wc_to_draw_, y_wc_to_draw_, rot_heading_deg=rot_heading_deg, half_length=half_length)
+    rot_x_centerlane, rot_y_centerlane, rot_fit_centerlane = rot2bus(x_wc_to_draw_, y_wc_to_draw_, rot_heading_deg=rot_heading_deg, half_length=half_length)
     ret_lane_detection_msg.CenterLaneX = rot_x_centerlane
     ret_lane_detection_msg.CenterLaneY = rot_y_centerlane
+    ret_lane_detection_msg.PolyFitC2 = rot_fit_centerlane[0]
+    ret_lane_detection_msg.PolyFitC1 = rot_fit_centerlane[1]
+    ret_lane_detection_msg.PolyFitC0 = rot_fit_centerlane[2]
+    ret_lane_detection_msg.LateralDis = rot_fit_centerlane[2]
 
-    
     ret_lane_detection_msg.CenterLineX = rot_x_centerlane
     if np.all(rot_x_centerlane==0):
         ret_lane_detection_msg.CenterLineY = rot_y_centerlane
     else:
         ret_lane_detection_msg.CenterLineY = rot_y_centerlane - 1.5
-        
-    left_lane_msg = draw_one_line_strip(x_wc_to_draw_, y_wc_to_draw_, rgba=(1,1,0,1), lane_id=0)
-    lane_marker_pub.publish(left_lane_msg)
-        
-    center_line_msg = draw_one_line_strip(x_wc_to_draw_, y_wc_to_draw_-1.5, rgba=(0,0,1,1), lane_id=9)
-    lane_marker_pub.publish(center_line_msg)
     
-    # ### applanix coord
-    # rot_center_line_msg = draw_one_line_strip(rot_y_centerlane - 1.5, rot_x_centerlane, rgba=(1,0,0,1), lane_id=10)
-    # rot_center_line_msg.header.frame_id = 'applanix'
-    # lane_marker_pub.publish(rot_center_line_msg)
+    ### applanix coord
+    rot_left_lane_msg = draw_one_line_strip(rot_y_centerlane, rot_x_centerlane, rgba=(1,1,0,1), lane_id=0)
+    rot_left_lane_msg.header.frame_id = 'applanix'
+    lane_marker_pub.publish(rot_left_lane_msg)
+    
+    rot_center_line_msg = draw_one_line_strip(rot_y_centerlane - 1.5, rot_x_centerlane, rgba=(0,0,1,1), lane_id=10)
+    rot_center_line_msg.header.frame_id = 'applanix'
+    lane_marker_pub.publish(rot_center_line_msg)
 
     if (updater.right_fit_wc is not None) and is_good_detection:
         x_wc_to_draw_ = x_wc_to_draw.copy()
@@ -170,12 +164,14 @@ def draw_visualization_and_pub(vis, out_j, updater):
         y_wc_to_draw_ = np.zeros_like(x_wc_to_draw)
         x_wc_to_draw_ = np.zeros_like(x_wc_to_draw)
     
-    rot_x_rightlane, rot_y_rightlane = rot2bus(x_wc_to_draw_, y_wc_to_draw_, rot_heading_deg=rot_heading_deg, half_length=half_length)
+    rot_x_rightlane, rot_y_rightlane, rot_fit_rightlane = rot2bus(x_wc_to_draw_, y_wc_to_draw_, rot_heading_deg=rot_heading_deg, half_length=half_length)
     ret_lane_detection_msg.RightCurbX = rot_x_rightlane
     ret_lane_detection_msg.RightCurbY = rot_y_rightlane
     
-    right_lane_msg = draw_one_line_strip(x_wc_to_draw_, y_wc_to_draw_, rgba=(0,1,0,1), lane_id=1)
-    lane_marker_pub.publish(right_lane_msg)
+    ### applanix coord
+    rot_right_lane_msg = draw_one_line_strip(rot_y_rightlane, rot_x_rightlane, rgba=(0,1,0,1), lane_id=1)
+    rot_right_lane_msg.header.frame_id = 'applanix'
+    lane_marker_pub.publish(rot_right_lane_msg)
     
     lane_detection_pub.publish(ret_lane_detection_msg)
     

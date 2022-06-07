@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(MESSAGE_FILES
   "LaneDetectionMsg.msg"
   "CNNLaneDetectionMsg.msg"
+  "LaneDetectionMsgFull.msg"
 )
 
 find_package(catkin REQUIRED COMPONENTS

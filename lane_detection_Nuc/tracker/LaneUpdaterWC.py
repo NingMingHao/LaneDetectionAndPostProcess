@@ -104,6 +104,7 @@ class Lane_updater(object):
         self.has_initialized = False
         self.recent_detect_list = [0] * self.init_wait_length
         self.continuous_no_detect_distance = 0
+        self.selected_left_percent = 0
         
         self.bounded_left_CP = np.array([[],[]]).T
         self.bounded_right_CP = np.array([[],[]]).T
@@ -493,6 +494,7 @@ class Lane_updater(object):
         
         if np.sum(out_j[:, 1] != 0) > 2: #1 is the left lane channel
             left_flag, lefty, leftx, selected_left_percent = self.bounded_search(out_j[:, 1], row_anchor_original_image, 'LEFT')
+            self.selected_left_percent = selected_left_percent
             if left_flag:
                 self.bounded_left_CP = np.array(np.vstack( (leftx,lefty) ).T)
             if selected_left_percent < 0.6:
