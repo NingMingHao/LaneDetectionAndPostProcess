@@ -1,0 +1,304 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 0
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+      Splitter Ratio: 0.5029411911964417
+    Tree Height: 844
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: Front_rect
+Preferences:
+  PromptSaveOnExit: true
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: false
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 111
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: Velodyne
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 2
+      Size (m): 0.009999999776482582
+      Style: Points
+      Topic: /velodyne_points/transformed
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /pylon_camera_node_left/image_rect
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Left_rect
+      Normalize Range: true
+      Queue Size: 1
+      Transport Hint: compressed
+      Unreliable: false
+      Value: false
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /pylon_camera_node_center/image_rect
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Front_rect
+      Normalize Range: true
+      Queue Size: 1
+      Transport Hint: compressed
+      Unreliable: false
+      Value: false
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /pylon_camera_node_right/image_rect
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Right_rect
+      Normalize Range: true
+      Queue Size: 1
+      Transport Hint: compressed
+      Unreliable: false
+      Value: false
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        applanix:
+          Value: true
+        center_cam:
+          Value: true
+        map:
+          Value: true
+        rslidar_front:
+          Value: true
+        velodyne:
+          Value: true
+      Marker Scale: 5
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        map:
+          applanix:
+            {}
+          rslidar_front:
+            {}
+      Update Interval: 0
+      Value: true
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /projection_img_center
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Front_projection
+      Normalize Range: true
+      Queue Size: 1
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 121
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: Projection_Cloud
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 2
+      Size (m): 0.009999999776482582
+      Style: Points
+      Topic: /velodyne_points/filtered
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: false
+      Keep: 500
+      Name: Odometry
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 25; 255; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 5
+        Value: Arrow
+      Topic: /ego_odom
+      Unreliable: false
+      Value: false
+    - Class: jsk_rviz_plugin/BoundingBoxArray
+      Enabled: true
+      Name: BoundingBoxArray
+      Topic: /bbox_local
+      Unreliable: false
+      Value: true
+      alpha: 1
+      color: 255; 0; 215
+      coloring: Flat color
+      line width: 0.09000000357627869
+      only edge: true
+      show coords: false
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Theta std deviation: 0.2617993950843811
+      Topic: /initialpose
+      X std deviation: 0.5
+      Y std deviation: 0.5
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Angle: -1.0899994373321533
+      Class: rviz/TopDownOrtho
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Scale: 26.487354278564453
+      Target Frame: <Fixed Frame>
+      Value: TopDownOrtho (rviz)
+      X: -420.9308166503906
+      Y: 581.61083984375
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: true
+  Front_projection:
+    collapsed: false
+  Front_rect:
+    collapsed: false
+  Height: 995
+  Hide Left Dock: true
+  Hide Right Dock: false
+  Left_rect:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd00000004000000000000015600000389fc020000000ffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afc00000028000000d80000000000fffffffa000000000100000001fb000000180049006d0061006700650020002d0020004c006500660074020000006b0000010a00000358000002a7fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001c0049006d0061006700650020002d002000430065006e00740065007202000003c50000010b00000366000002a4fb0000000a0049006d00610067006500000001eb000000610000000000000000fb0000000a0049006d0061006700650300000385000001050000030d0000025efb000000100044006900730070006c006100790073000000003d00000389000000c900fffffffb0000000a0049006d0061006700650100000304000000bd0000000000000000fb0000001e0052006500610072005f0063006f006d00700072006500730073006500640100000146000000d30000000000000000fb0000002000460072006f006e0074005f00700072006f006a0065006300740069006f006e0000000169000000a50000001600ffffff0000000100000300000001d1fc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000001d1000000a400fffffffb0000000800540069006d0065000000003d000001d10000003900fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b20000000000000000000000020000073f0000003bfc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004fb000001a3fc010000000afb00000012004c006500660074005f00720065006300740000000000000002660000000000000000fc00000000000001320000000000fffffffa000000000200000002fb0000002000460072006f006e0074005f00700072006f006a0065006300740069006f006e0000000000ffffffff0000000000000000fb0000001400460072006f006e0074005f00720065006300740100000200000001e40000000000000000fb0000001a00460072006f006e0074005f0072006500730069007a00650064000000024d000004f00000000000000000fb0000001e004c006500660074005f0063006f006d00700072006500730073006500640100000000000002690000000000000000fb0000002000460072006f006e0074005f0063006f006d0070007200650073007300650064010000026f000002640000000000000000fb0000001400520069006700680074005f007200650063007400000003a10000039c0000000000000000fb0000000800540069006d00650100000000000004500000000000000000fb00000012004c006500660074005f00720065006300740000000000ffffffff0000007300fffffffb0000001400460072006f006e0074005f00720065006300740000000000000004fb0000007c00fffffffb0000001400520069006700680074005f00720065006300740000000000ffffffff0000007b00ffffff0000064d0000038900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Right_rect:
+    collapsed: false
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1613
+  X: 67
+  Y: 27
